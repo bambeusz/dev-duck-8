@@ -27,7 +27,9 @@ class MyComponent extends React.Component<undefined, IState> {
     public render() {
         return <ul>
             {this.state.resources.map((resource: IResource) => {
-                return <li key={resource.id}>{resource.bar}</li>;
+                return <li key={resource.id}>
+                    Bar: {resource.bar}; Baz.Zar: {resource.baz.zar}
+                </li>;
             })}
         </ul>;
     }
