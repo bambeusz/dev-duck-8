@@ -8,6 +8,7 @@ const myPlugin = {
     }
 };
 Chart.pluginService.register(myPlugin);
+// plugin unregistering added in Jan 2018
 Chart.pluginService.unregister(myPlugin);
 
 class MyComponent extends React.Component<undefined, undefined> {
@@ -16,11 +17,10 @@ class MyComponent extends React.Component<undefined, undefined> {
     componentDidMount() {
         // plugin support added in May 2017
         // plugin registering per instance added in Nov 2017 (any)
-        // plugin unregistering added in Jan 2018
         const chart = new Chart(this.canvas.getContext('2d'), {
             type: 'Bar',
             plugins: 'foo',
-        })
+        });
     }
 
     public render() {
