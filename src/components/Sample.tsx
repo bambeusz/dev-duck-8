@@ -10,7 +10,7 @@ interface IConnectedDispatch {
     foo: (foo: number) => Action;
 }
 
-interface IConnectedProps {
+interface IConnectedState {
     bar: string;
 }
 
@@ -18,9 +18,9 @@ interface IOwnProps {
     baz: number;
 }
 
-interface IReduxProps extends IOwnProps, IConnectedProps, IConnectedDispatch {}
+interface IReduxProps extends IOwnProps, IConnectedState, IConnectedDispatch {}
 
-interface IProps extends IOwnProps, IConnectedProps, IConnectedDispatch, InjectedIntlProps {}
+interface IProps extends IOwnProps, IConnectedState, IConnectedDispatch, InjectedIntlProps {}
 
 class MyComponent extends React.Component<IProps, undefined> {
     constructor(props: IProps) {
@@ -36,7 +36,7 @@ class MyComponent extends React.Component<IProps, undefined> {
 
 const Injected = injectIntl<IReduxProps>(MyComponent);
 
-export default connect<IConnectedProps, IConnectedDispatch, IOwnProps>(
+export default connect<IConnectedState, IConnectedDispatch, IOwnProps>(
     (state: IReduxState) => ({
         bar: state.bar,
     }),
