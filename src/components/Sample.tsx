@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Action } from 'redux';
 
 import { InjectedIntlProps, injectIntl } from 'react-intl';
+
 import { fooAction } from '../actions/foo';
 import { IReduxState } from '../types/store';
 
