@@ -4,7 +4,7 @@ import { Action } from 'redux';
 
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { fooAction } from '../actions/foo';
-import {IReduxState} from '../types/store';
+import { IReduxState } from '../types/store';
 
 interface IConnectedDispatch {
     foo: (foo: number) => Action;
@@ -23,12 +23,6 @@ interface IReduxProps extends IOwnProps, IConnectedState, IConnectedDispatch {}
 interface IProps extends IOwnProps, IConnectedState, IConnectedDispatch, InjectedIntlProps {}
 
 class MyComponent extends React.Component<IProps, undefined> {
-    constructor(props: IProps) {
-        super(props);
-
-        props.foo(props.baz);
-    }
-
     public render() {
         return <div>Hello</div>;
     }
