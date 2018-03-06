@@ -1,46 +1,36 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { Action } from 'redux';
 
-import { InjectedIntlProps, injectIntl } from 'react-intl';
-import { fooAction } from '../actions/foo';
-import {IReduxState} from '../types/store';
+import ApiResource, { IResource } from '../services/ApiResource';
 
-interface IConnectedDispatch {
-    foo: (foo: number) => Action;
+interface IState {
+    resources: IResource[],
 }
 
-interface IConnectedProps {
-    bar: string;
-}
-
-interface IOwnProps {
-    baz: number;
-}
-
-interface IReduxProps extends IOwnProps, IConnectedProps, IConnectedDispatch {}
-
-interface IProps extends IOwnProps, IConnectedProps, IConnectedDispatch, InjectedIntlProps {}
-
-class MyComponent extends React.Component<IProps, undefined> {
-    constructor(props: IProps) {
+class MyComponent extends React.Component<undefined, IState> {
+    constructor(props: undefined) {
         super(props);
 
-        props.foo(props.baz);
+        this.state = {
+            resources: [],
+        }
+    }
+
+    componentDidMount() {
+        ApiResource.getAll()
+            .then((resources: IResource[]) => {
+                this.setState({
+                    resources
+                });
+            });
     }
 
     public render() {
-        return <div>Hello</div>;
+        return <ul>
+            {this.state.resources.map((resource: IResource) => {
+                return <li key={resource.id}>{resource.bar}</li>;
+            })}
+        </ul>;
     }
 }
 
-const Injected = injectIntl<IReduxProps>(MyComponent);
-
-export default connect<IConnectedProps, IConnectedDispatch, IOwnProps>(
-    (state: IReduxState) => ({
-        bar: state.bar,
-    }),
-    (dispatch) => ({
-        foo: (foo: number) => dispatch(fooAction(foo)),
-    }),
-)(Injected);
+export default MyComponent;
