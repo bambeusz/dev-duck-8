@@ -1,37 +1,32 @@
 import * as React from 'react';
+import * as Chart from 'chart.js';
 
-import ApiResource, { IResource } from '../services/ApiResource';
-
-interface IState {
-    resources: IResource[],
-}
-
-class MyComponent extends React.Component<undefined, IState> {
-    constructor(props: undefined) {
-        super(props);
-
-        this.state = {
-            resources: [],
-        }
+const myPlugin = {
+    id: 'myPlugin',
+    beforeInit: (chartInstance: Chart) => {
+        console.log(chartInstance);
     }
+};
+Chart.pluginService.register(myPlugin);
+Chart.pluginService.unregister(myPlugin);
+
+class MyComponent extends React.Component<undefined, undefined> {
+    canvas: HTMLCanvasElement;
 
     componentDidMount() {
-        ApiResource.getAll()
-            .then((resources: IResource[]) => {
-                this.setState({
-                    resources
-                });
-            });
+        // plugin support added in May 2017
+        // plugin registering per instance added in Nov 2017 (any)
+        // plugin unregistering added in Jan 2018
+        const chart = new Chart(this.canvas.getContext('2d'), {
+            type: 'Bar',
+            plugins: 'foo',
+        })
     }
 
     public render() {
-        return <ul>
-            {this.state.resources.map((resource: IResource) => {
-                return <li key={resource.id}>
-                    Bar: {resource.bar}; Baz.Zar: {resource.baz.zar}
-                </li>;
-            })}
-        </ul>;
+        return <div>
+            <canvas ref={c => this.canvas = c} />
+        </div>;
     }
 }
 
