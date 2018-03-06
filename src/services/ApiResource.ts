@@ -10,17 +10,18 @@ export interface IResource {
     baz: IResourceBaz;
 }
 
+const resource: IResource = {
+    id: '321',
+    foo: 'foo',
+    bar: [1, 2, 10, 23, 50],
+    baz: {
+        id: '123',
+        zar: ['Hello', 'Whatever'],
+    },
+};
+
 class ApiResource {
     public static getAll(): Promise<IResource[]> {
-        const resource = {
-            id: '321',
-            foo: 'foo',
-            bar: [1, 2, 10, 23, 50],
-            baz: {
-                id: '123',
-                zar: ['Hello', 'Whatever'],
-            },
-        };
         return Promise.resolve([resource]);
     }
 }
